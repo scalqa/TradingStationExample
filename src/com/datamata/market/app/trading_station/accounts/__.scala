@@ -1,4 +1,6 @@
-package com.datamata.market; package app.trading_station; package accounts; import Live.*; import language.implicitConversions
+package com.datamata.market; package app.trading_station; import Live.*; import language.implicitConversions
+
+import accounts.*
 
 object Accounts extends Ui.Module.Listing.Default[Row](Table):
   inline def Row = accounts.Row; type Row = accounts.Row

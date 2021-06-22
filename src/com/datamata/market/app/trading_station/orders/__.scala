@@ -1,4 +1,6 @@
-package com.datamata.market; package app.trading_station; package orders; import Live.*; import language.implicitConversions
+package com.datamata.market; package app.trading_station; import Live.*; import language.implicitConversions
+
+import orders.*
 
 object Orders extends Ui.Module.Listing[Row]:
   private val manual_* = Pro.M(false)

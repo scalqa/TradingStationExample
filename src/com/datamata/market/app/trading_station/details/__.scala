@@ -1,4 +1,6 @@
-package com.datamata.market; package app.trading_station; package details; import Live.*; import language.implicitConversions
+package com.datamata.market; package app.trading_station; import Live.*; import language.implicitConversions
+
+import details.*
 
 class Details extends Ui.Module.Detail[Position]:
   self =>

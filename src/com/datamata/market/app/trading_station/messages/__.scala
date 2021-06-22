@@ -1,4 +1,4 @@
-package com.datamata.market; package app.trading_station; package messages; import Live.*; import language.implicitConversions
+package com.datamata.market; package app.trading_station; import Live.*; import language.implicitConversions
 
 object Messages extends Ui.Module.Listing[Message] with Message.Service:
 

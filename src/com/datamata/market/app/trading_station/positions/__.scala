@@ -1,4 +1,6 @@
-package com.datamata.market; package app.trading_station; package positions; import Live.*; import language.implicitConversions
+package com.datamata.market; package app.trading_station; import Live.*; import language.implicitConversions
+
+import positions.*
 
 object Positions extends Ui.Module.Listing.Default[Row](new table.Table):
   type Row = positions.Row
