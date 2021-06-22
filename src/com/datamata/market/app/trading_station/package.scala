@@ -9,5 +9,5 @@ val OrderBackgroundColor            = Fx.Color(192, 192, 192)
 val OrderRowEmptyColor              = Fx.Color.LightGray
 val AccountIdClass: Fx.Style.Class  = "market-trading-station-account-id"
 
-extension(x: M.Order)
+extension(x: market.Order)
   def background: Fx.Style = if (x.isVoid) "" else if (x.qnty.isShort) "-fx-background-color: rgb(97, 0, 67)" else "-fx-background-color: rgb(0, 0, 150)"
