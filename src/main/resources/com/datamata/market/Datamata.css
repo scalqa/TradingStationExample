@@ -7,7 +7,7 @@
 }
 
 .axis{
-    -fx-font-family: "Arial";
+    -fx-tick-label-font-family: "Arial";
 }
 
 .market-candlestick-line {
