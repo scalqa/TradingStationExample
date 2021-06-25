@@ -4,6 +4,7 @@ object MainDemo extends Ui.Application(1500, 700, "Trading Station With Simulate
   lazy  val View = Layout
 
   lazySetup {
+    scene.window.onHidden(() => J.Vm.exit)
 
     /* persistSizeAndLocation */   // Do not want to write to disk for the demo
 
