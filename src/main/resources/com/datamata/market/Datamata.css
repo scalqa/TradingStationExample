@@ -6,6 +6,10 @@
     -fx-font-family: "Arial";
 }
 
+.axis{
+    -fx-font-family: "Arial";
+}
+
 .market-candlestick-line {
     -fx-stroke: #666666;
     -fx-stroke-width: 2px;
