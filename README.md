@@ -9,7 +9,7 @@ Nevertheless, this application gives a good chance to evaluate functionality, sc
 
 To compile/launch the application start SBT in project directory and execute "run". 
 
-#Ideas To Try
+# Ideas To Try
 
 The demo contains a stock data feed simulation. "Right-Clicking" "Sim Tape" allows generating as many trading symbols as required, 
 testing scalability. But, keep in mind that 10 thousand symbols would produce same feed load as all North American markets, 
