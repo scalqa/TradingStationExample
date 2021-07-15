@@ -4,7 +4,7 @@ object Actions:
 
   def ~(row: Row): ~[Fx.Action] = row.value_?.map {
     case t: Tape =>
-      ~~(Fx.Action("Browser...", () => Fx.Stage("Tape Browser", 500, 300, new ui.base.Tape.Detail(t)).show))
+      ~~(Fx.Action("Browser...", () => Fx.Stage("Tape Browser", 500, 300, new ui.base.tape.Detail(t)).^(_.scene.styleSheets += Ui.datamataCssUrl).show))
 
     case a: Account =>
 

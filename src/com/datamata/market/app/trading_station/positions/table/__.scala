@@ -1,6 +1,6 @@
 package com.datamata.market; package app.trading_station; package positions; package table; import Live.*; import language.implicitConversions
 
-class Table extends ui.base.Position.Table[Row] with _positionColumns with _tradingColumns:
+class Table extends ui.base.position.Table[Row] with _positionColumns with _tradingColumns:
   type VIEW = Position; view_:(_.position)
   override protected def setupDefaultColumns = ()
   private val statusOrd =  summon[Ordering[Position.Status]].on[Row](_.position.status)

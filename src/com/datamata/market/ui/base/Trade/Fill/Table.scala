@@ -1,6 +1,6 @@
-package com.datamata; package market; package ui; package base; package Trade; package Fill; import language.implicitConversions
+package com.datamata; package market; package ui; package base; package trade; package Fill; import language.implicitConversions
 
-trait Table[ROW] extends Quote.Table[ROW]:
+trait Table[ROW] extends quote.Table[ROW]:
   type VIEW <: M.Trade.Fill
 
   override protected def setupDefaultColumns: Unit =

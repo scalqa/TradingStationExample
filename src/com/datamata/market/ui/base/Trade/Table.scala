@@ -1,4 +1,4 @@
-package com.datamata; package market; package ui; package base; package Trade; import language.implicitConversions
+package com.datamata; package market; package ui; package base; package trade; import language.implicitConversions
 
 import  Mkt.Live.{ Position => TP }
 

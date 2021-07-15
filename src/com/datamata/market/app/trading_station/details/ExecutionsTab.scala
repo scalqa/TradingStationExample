@@ -18,7 +18,7 @@ class ExecutionsTab(pro: Pro.O[Position]) extends Fx.Pane.Tab.Panel("Executions"
       recalculate
     })
 
-    object Table extends ui.base.Trade.Fill.Table[Row]:
+    object Table extends ui.base.trade.Fill.Table[Row]:
       type VIEW = Execution
       view_:(_.real)
       setupDefaultColumns

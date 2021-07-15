@@ -1,4 +1,4 @@
-package com.datamata; package market; package ui; package base; package Ticker; package detail; import language.implicitConversions
+package com.datamata; package market; package ui; package base; package ticker; package detail; import language.implicitConversions
 
 class Data(val reversed: Boolean = false) extends Ui.Module.Detail[M.Ticker]:
   val trade = new Listing(LAST)
@@ -16,7 +16,7 @@ class Data(val reversed: Boolean = false) extends Ui.Module.Detail[M.Ticker]:
   class Listing(val typ: M.Quote.Type) extends Ui.Module.Listing[M.Quote.Bar] {
     val Format = Gen.Math.Format("##.00")
 
-    protected object Table extends Quote.Bar.Table[M.Quote.Bar] {
+    protected object Table extends quote.bar.Table[M.Quote.Bar] {
       setupDefaultColumns
 
       val indexs = (0 <> 3).~.map(new Index(_)).><

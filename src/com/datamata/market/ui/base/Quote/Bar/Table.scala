@@ -1,4 +1,4 @@
-package com.datamata; package market; package ui; package base; package Quote; package Bar; import language.implicitConversions
+package com.datamata; package market; package ui; package base; package quote; package bar; import language.implicitConversions
 
 trait Table[RAW] extends Ui.Table[RAW]:
   type VIEW <: M.Quote.Bar

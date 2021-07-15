@@ -1,10 +1,10 @@
-package com.datamata; package market; package ui; package base; package Position; import language.implicitConversions
+package com.datamata; package market; package ui; package base; package position; import language.implicitConversions
 
-import  Mkt.Live.{ Position => LP }
+import  Live.{ Position => LP }
 import  Ui.*
 
-trait Table[RAW] extends Ticker.Table[RAW] with Trade.Table[RAW]:
-  type VIEW <: M.Position
+trait Table[RAW] extends ticker.Table[RAW] with trade.Table[RAW]:
+  type VIEW <: Position
 
   override protected def setupDefaultColumns: Unit =
     super.setupTickerColumns

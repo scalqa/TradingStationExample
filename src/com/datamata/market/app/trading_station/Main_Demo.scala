@@ -4,7 +4,6 @@ object MainDemo extends Ui.Application(1500, 700, "Trading Station With Simulate
   lazy  val View = Layout
 
   lazySetup {
-    scene.window.onHidden(() => J.Vm.exit)
 
     /* persistSizeAndLocation */   // Do not want to write to disk for the demo
 
@@ -24,4 +23,5 @@ object MainDemo extends Ui.Application(1500, 700, "Trading Station With Simulate
     Accounts.add("2", Account.Sim("Sim Account 2".AccountId, Tape.Sim).^(_.connection.connect))
     Accounts.add("3", Account.Sim("Sim Account 3".AccountId, Tape.Sim).^(_.connection.connect))
 
+    scene.window.onHidden(() => J.Vm.exit)
   }

@@ -1,4 +1,4 @@
-package com.datamata; package market; package ui; package base; package Ticker; package detail; import language.implicitConversions
+package com.datamata; package market; package ui; package base; package ticker; package detail; import language.implicitConversions
 
 class Stats extends Ui.Module.Detail[Ticker]:
   val symbol, close, high, low, volume, average =  Fx.Label()

@@ -19,6 +19,6 @@ lazy val needJavaFx = {
 
 libraryDependencies ++= Seq("base", "controls", "graphics").filter(_ => needJavaFx != "none").map( m=> "org.openjfx" % s"javafx-$m" % "11.0.2" classifier needJavaFx)
 
-libraryDependencies += "org.scalqa" % "scalqa_3" % "0.94"
+libraryDependencies += "org.scalqa" % "scalqa_3" % "0.95"
 
 mainClass in (Compile, run) := Some("com.datamata.market.app.trading_station.MainDemo")

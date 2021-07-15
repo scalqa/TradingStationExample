@@ -1,4 +1,4 @@
-package com.datamata; package market; package ui; package base; package Ticker; package detail; import language.implicitConversions
+package com.datamata; package market; package ui; package base; package ticker; package detail; import language.implicitConversions
 
 class Quotes extends Ui.Module.Detail[M.Ticker]:
   val ask   = new Block(ASK)
@@ -12,7 +12,7 @@ class Quotes extends Ui.Module.Detail[M.Ticker]:
 
     Quotes.this.onChangeRun { Table.items = Quotes.this().^.?.map(v => Idx.O.wrap(v.quote(typ).list).reversed_^) or \/ }
 
-    protected object Table extends Quote.Table[Quote] :
+    protected object Table extends quote.Table[Quote] :
       setupDefaultColumns
       columns.~.takeType[QntyColumn].read_?.forval(c => {
         c.label = typ.toString.replaceAll("Last", "Trade") + 's'

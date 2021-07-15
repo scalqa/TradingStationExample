@@ -1,4 +1,4 @@
-package com.datamata; package market; package ui; package base; package Ticker; package detail; import language.implicitConversions
+package com.datamata; package market; package ui; package base; package ticker; package detail; import language.implicitConversions
 
 class Detail[A <: M.Ticker] extends Ui.Module.Detail[A]:
   val stats  : Stats   = new Stats().^(_.bindTo(this))
@@ -12,8 +12,7 @@ class Detail[A <: M.Ticker] extends Ui.Module.Detail[A]:
     add("Quotes", quotes)
     add("Data", data)
 
-  this.onChangeRun(statsTab.text= this().symbol.toString)
-
+  this.onChangeRun(statsTab.text= this().symbol.tag)
 
 object Detail:
   type Data   = detail.Data

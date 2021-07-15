@@ -1,6 +1,6 @@
-package com.datamata; package market; package ui; package base; package Ticker; import language.implicitConversions
+package com.datamata; package market; package ui; package base; package ticker; import language.implicitConversions
 
-import  M.Live.{ Ticker => LT }
+import  Live.{ Ticker => LT }
 
 trait Table[RAW] extends Ui.Table[RAW]:
   type VIEW <: M.Ticker

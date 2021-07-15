@@ -6,14 +6,14 @@ class Details extends Ui.Module.Detail[Position]:
   self =>
 
   protected object View extends Fx.Pane.Tab:
-    add("Doc",   new ui.base.Ticker.Detail.Stats().^(_.bindTo(self)))
+    add("",       new ui.base.ticker.detail.Stats().^(_.bindTo(self)))
     add(ExecutionsTab(self))
-    add("Quotes", new ui.base.Ticker.Detail.Quotes().^(_.bindTo(self)))
-    add("Data",   new ui.base.Ticker.Detail.Data(true).^(_.bindTo(self)).^(_.View.selection.set(1)))
+    add("Quotes", new ui.base.ticker.detail.Quotes().^(_.bindTo(self)))
+    add("Data",   new ui.base.ticker.detail.Data(true).^(_.bindTo(self)).^(_.View.selection.set(1)))
     add(ChartTab(self));
     selection.set(2)
 
-  self.onValueChange(p => View.tabs.head.text = p.symbol.ticker)
+  self.onValueChange(p => View.tabs.head.text = p.symbol.ticker.tag)
 
 object Details extends Details:
 
