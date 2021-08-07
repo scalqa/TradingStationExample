@@ -16,7 +16,7 @@ object Table extends Ui.Table[Live.Account.Bot]:
         += new Menu("Sell Setting", s => m.parameter = m.parameter.copySell(s))
         += new Fx.Menu.Item.Custom(Fx.Pane(
           "Amount K. ",
-          Fx.Text.Field.Number(6, (m.parameter.amount / 1000).Int.tag).^(v => v.onActionRun( v.int_??.forval(i => m.parameter = m.parameter.copyAmount((i * 1000).Amount))))))
+          Fx.Text.Field.Number(6, (m.parameter.amount / 1000).toInt.tag).^(v => v.onActionRun( v.int_??.forval(i => m.parameter = m.parameter.copyAmount((i * 1000).Amount))))))
         += new Fx.Menu.Item.Custom(Fx.Pane(
           "max Positions ",
           Fx.Text.Field.Number(6, m.parameter.count.tag).^(v => v.onActionRun(v.int_??.forval(i => m.parameter = m.parameter.copyCount(if (i <= 0 || i >= 1000000) 1000000 else i))))))

@@ -13,6 +13,6 @@ trait Table[ROW] extends Ui.Table[ROW]:
   class PlColumn          extends Column[Amount]{           Ui.PlConfig(this); valueView_:*(_ match{ case v: TP => v.pl_*;        case v => Pro.O.constant(v.pl) })}
   class FillCountColumn   extends Column[Number]("Fills", 30) {                valueView_:(_.fills.size: Number) }
 
-  class AmountIndexColumn extends Column[Number]("A") { Ui.IndexConfig(this);  valueView_:*(v => (v match{ case v: TP => v.amount_*; case v => Pro.O.constant(v.amount) }).map_^(v => (v / 1000D).Number))}
+  class AmountIndexColumn extends Column[Number]("A") { Ui.IndexConfig(this);  valueView_:*(v => (v match{ case v: TP => v.amount_*; case v => Pro.O.constant(v.amount) }).map_^(v => (v / 1000D).toNumber))}
 
 

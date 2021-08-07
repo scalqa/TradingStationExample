@@ -42,6 +42,6 @@ transparent trait _tradingColumns:
     valueView_:*(_.created_*)
     label = \/
     sortable = false
-    graphic = Fx.Label().^(l => Fx.Thread.scheduleEvery(1.Second, l.text = DayTime().roundTo(1.Second)(using DOWN).tag))
+    graphic = Fx.Label().^(l => Fx.Thread.scheduleEvery(1.Second, l.text = DayTime.current.roundTo(1.Second)(using DOWN).tag))
   }
 

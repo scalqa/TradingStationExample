@@ -7,7 +7,7 @@ object Orders extends Ui.Module.Listing[Row]:
 
   object Table extends orders.table.Table
 
-  Positions.selection.onChange(s => control() = s.get_? or \/)
+  Positions.selection.onChange(s => control() = s.value_? or \/)
 
   def position_? : Opt[Position] = control().^.?.map_?(_.position.^.?)
 

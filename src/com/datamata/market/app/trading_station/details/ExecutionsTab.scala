@@ -31,7 +31,7 @@ class ExecutionsTab(pro: Pro.O[Position]) extends Fx.Pane.Tab.Panel("Executions"
       Table.items.~.reverse.zipFoldAs(\/ :Qnty, _ + _.real.qnty).foreach(t => t._1.totalQnty_*() = t._2)
       Orders.Table.items = pro().fills.~.sortBy(_.orderId).reverse.groupWith(_.orderId).map(t => {
         val (q, a, f) = t._2.sumFew(_.qnty, _.amount, _.fee)
-        (t._1, q.Long.Qnty, a, f)
+        (t._1, q.toLong.Qnty, a, f)
       }).><
 
   // *************************************************************************

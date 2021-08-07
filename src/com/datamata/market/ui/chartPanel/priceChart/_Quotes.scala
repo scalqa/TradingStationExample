@@ -9,7 +9,7 @@ transparent trait _Quotes:
 
     def apply(l: Idx[Quote]): Unit =
       i = l
-      items = if (!show_*()) \/ else Idx.O.wrap(l).statefulMap_^(q => new Item(q.created.general, q.price) {
+      items = if (!show_*()) \/ else Idx.O.wrap(l).statefulMap_^(q => new Item(q.created.genTime, q.price) {
         override lazy  val node : Fx.Shape.Path = Fx.Shape.Path().^(_.stroke = Fx.Color.LightBlue)
         layoutJob = () => node.elements.replaceAll(items.~.zipIndex.map((i,it) => (if (i == 0) Fx.Shape.Path.MoveTo(it.xPos, it.yPos) else Fx.Shape.Path.LineTo(it.xPos, it.yPos)) :Fx.Shape.Path.Element))
       })

@@ -9,14 +9,14 @@ class Details extends Ui.Module.Detail[Position]:
     add("",       new ui.base.ticker.detail.Stats().^(_.bindTo(self)))
     add(ExecutionsTab(self))
     add("Quotes", new ui.base.ticker.detail.Quotes().^(_.bindTo(self)))
-    add("Data",   new ui.base.ticker.detail.Data(true).^(_.bindTo(self)).^(_.View.selection.set(1)))
+    add("Data",   new ui.base.ticker.detail.Data(true).^(_.bindTo(self)).^(_.View.selection.selectAt(1)))
     add(ChartTab(self));
-    selection.set(2)
+    selection.selectAt(2)
 
   self.onValueChange(p => View.tabs.head.text = p.symbol.ticker.tag)
 
 object Details extends Details:
 
   Positions.selection.onChange(s =>
-    Fx.Thread.scheduleIn(1.Millis, Details() = s.get_?.map(_.position) or \/)
+    Fx.Thread.scheduleIn(1.Millis, Details() = s.value_?.map(_.position) or \/)
   )

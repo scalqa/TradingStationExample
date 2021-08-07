@@ -10,7 +10,7 @@ object TimeAxis:
 
   class TimelineProperty(tl: Time.Line) extends Pro.M.X.Basic[Time.Line](tl) with ReversibleFunction[Gen.Time, Double]:
 
-    def apply(t: Gen.Time): Double = tl.millisTotal(t.mktTime).Double
+    def apply(t: Gen.Time): Double = tl.millisTotal(t.mktTime).toDouble
 
-    def undo(d: Double): Gen.Time = tl.time(d.toLong).general
+    def undo(d: Double): Gen.Time = tl.time(d.toLong).genTime
 

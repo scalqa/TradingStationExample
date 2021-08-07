@@ -6,7 +6,7 @@ transparent trait _Orders:
   object Orders extends Series:
     var cnt = 0
     def apply(l: Idx[Order]): Unit =
-      items = Idx.O.wrap(l).statefulMap_^(f => new Item(f.created.general, f.price) {
+      items = Idx.O.wrap(l).statefulMap_^(f => new Item(f.created.genTime, f.price) {
         val hash = { cnt += 1; cnt }
         override lazy  val node : Fx.Shape.Circle = new Fx.Shape.Circle(0) {
           new Fx.Tooltip {

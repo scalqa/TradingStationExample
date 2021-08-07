@@ -39,7 +39,7 @@ object SampleQuoteData extends Quote.Range.X.BarBase {
 
   def apply(i: Int): Quote.Bar = {
     val a = data(i);
-    new Quote.Bar.Default(Time(Year().months(0).days(a(0).toInt - 1)), _1_Day, Price(a(1)), Price(a(3)), Price(a(4)), Price(a(2)), Qnty((a(5) * 100).toLong))
+    new Quote.Bar.Default(Time(Year.current.months(0).days(a(0).toInt - 1)), _1_Day, Price(a(1)), Price(a(3)), Price(a(4)), Price(a(2)), Qnty((a(5) * 100).toLong))
   }
 
   def size = 31

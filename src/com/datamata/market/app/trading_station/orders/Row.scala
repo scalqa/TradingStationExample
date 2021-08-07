@@ -8,7 +8,7 @@ class Row(val positionRow: Positions.Row, val serviceType: Quote.Type, val order
 
   def position_? = positionRow.position.?
 
-  def compareTo(that: Row) = { val i = this.sortingBase - that.sortingBase; if (i != 0) i else java.lang.Double.compare(that.order.price.Double, this.order.price.Double) }
+  def compareTo(that: Row) = { val i = this.sortingBase - that.sortingBase; if (i != 0) i else java.lang.Double.compare(that.order.price.toDouble, this.order.price.toDouble) }
 
   def doc = Doc(this) += ("serviceType", serviceType) += ("Price", order_?.map(_.price.tag) or "") += ("sortingBase", sortingBase) += ("Status", order_?.map(_.status.toString) or "")
 

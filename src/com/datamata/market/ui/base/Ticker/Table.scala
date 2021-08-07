@@ -25,7 +25,7 @@ trait Table[RAW] extends Ui.Table[RAW]:
   class PriceChangeColumn extends Column[Percent] { Ui.PriceChangeConfig(this); valueView_:*(_ match{ case v: LT => v.change_*;     case v => Pro.O.constant(v.change) })}
 
   class SpreadPercentColumn extends Column[Number]("%", 25):
-    valueView_:*(_ match{ case v: LT => v.spread_*.map_^(_.Number); case v => Pro.O.constant(v.spread).map_^(_.Number) })
+    valueView_:*(_ match{ case v: LT => v.spread_*.map_^(_.toNumber); case v => Pro.O.constant(v.spread).map_^(_.toNumber) })
     tooltip_:(v => "Bid/Ask Spread Percent")
     Ui.IndexConfig(this);
     format_:(Table.Format(_))

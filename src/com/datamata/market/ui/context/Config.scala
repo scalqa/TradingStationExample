@@ -11,7 +11,7 @@ object Config:
 
   object Pl extends ColumnConfig[Amount]("PL", c => {
     c.styleClass = MktPlClass
-    c.format_:(_.Long.abs.toBrief, _ => "")
+    c.format_:(_.toLong.abs.toBrief, _ => "")
     c.cell_:(l => {
       val ll = l.cast[Fx.Table.Cell[_,_,Percent]]
       ll.value_?.forval(v => Context.PositiveNegativePseudoGroup(l, v >= 0))
@@ -59,7 +59,7 @@ object Config:
     c.format_: {
       case t if (t.isVoid || t == M.Time.min) => ""
       case t if (t.day.isCurrent) =>
-        //        val ct = Time()
+        //        val ct = Time.current
         //        val len = (t lengthTo ct).roundTo(5.Seconds, Core.Rounding.Down)
         //        if (len < 5.Minute) if (ct < t) "in " + len else len.toBrief
         //        else

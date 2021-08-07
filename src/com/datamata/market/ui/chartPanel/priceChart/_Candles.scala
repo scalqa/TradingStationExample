@@ -8,7 +8,7 @@ transparent trait _Candles:
   object Candles extends Series:
     def apply(l: Idx[Quote.Bar]): Unit =
       items = Idx.O.wrap(l).statefulMap_^(s => {
-        class CandleItem extends Item((s.start + s.duration).general, s.close) {
+        class CandleItem extends Item((s.start + s.duration).genTime, s.close) {
           override lazy  val node : Z.CandleNode = new Z.CandleNode
           layoutJob = () => {
             node.update(s, axisY.apply, 6);

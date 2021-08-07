@@ -11,7 +11,7 @@ class Stats extends Ui.Module.Detail[Ticker]:
     volume.text = t.volume.toBrief
     average.text = {
       val v = t.averageDay
-      Percent(t.volume.real * t.close.real, v.real).Int.toString + "% / " + v.toBrief
+      Percent(t.volume.real * t.close.real, v.real).toInt.toString + "% / " + v.toBrief
     }
   })
 
