@@ -11,7 +11,7 @@ object Config:
 
   object Pl extends ColumnConfig[Amount]("PL", c => {
     c.styleClass = MktPlClass
-    c.format_:(_.toLong.abs.toBrief, _ => "")
+    c.format_:(_.toLong.abs.tagBrief, _ => "")
     c.cell_:(l => {
       val ll = l.cast[Fx.Table.Cell[_,_,Percent]]
       ll.value_?.forval(v => Context.PositiveNegativePseudoGroup(l, v >= 0))
@@ -29,9 +29,9 @@ object Config:
 
   object Amount extends ColumnConfig[Amount]("Amount", c => { c.styleClass = MktAmountClass; c.format_:(_.format("###.##")) })
 
-  object BriefAmount extends ColumnConfig[Amount]("Amount", c => { c.styleClass = MktAmountClass; c.format_:(_.toBrief) })
+  object BriefAmount extends ColumnConfig[Amount]("Amount", c => { c.styleClass = MktAmountClass; c.format_:(_.tagBrief) })
 
-  object Volume extends ColumnConfig[Qnty]("Vol", c => { c.styleClass = MktLotsClass; c.format_:(_.toBrief) })
+  object Volume extends ColumnConfig[Qnty]("Vol", c => { c.styleClass = MktLotsClass; c.format_:(_.tagBrief) })
 
   object Lot extends ColumnConfig[Qnty]("Lots", c => { c.styleClass = MktLotsClass; c.format_:(_.lots.abs.format("##.##")) })
 
@@ -61,9 +61,9 @@ object Config:
       case t if (t.day.isCurrent) =>
         //        val ct = Time.current
         //        val len = (t lengthTo ct).roundTo(5.Seconds, Core.Rounding.Down)
-        //        if (len < 5.Minute) if (ct < t) "in " + len else len.toBrief
+        //        if (len < 5.Minute) if (ct < t) "in " + len else len.tagBrief
         //        else
-        t.dayTime.toBrief
+        t.dayTime.tagBrief
       case t =>
         val s = t.roundTo(1.Second)(using DOWN).tag
         if (t.year.isCurrent) s.dropFirst(5) else s

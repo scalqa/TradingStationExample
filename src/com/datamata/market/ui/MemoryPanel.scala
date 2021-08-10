@@ -14,9 +14,9 @@ class MemoryPanel extends Pane.Grid:
   add(6, 0, Button("Garbage Collect", J.Vm.Memory.gc))
 
   Fx.Thread.scheduleEvery(1.Second, {
-    used.text = J.Vm.Memory.used.toBrief
-    total.text = J.Vm.Memory.total.toBrief
-    free.text = J.Vm.Memory.free.toBrief
-    max.text = J.Vm.Memory.max.toBrief
+    used.text = J.Vm.Memory.used.tagBrief
+    total.text = J.Vm.Memory.total.tagBrief
+    free.text = J.Vm.Memory.free.tagBrief
+    max.text = J.Vm.Memory.max.tagBrief
   })
 

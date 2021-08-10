@@ -8,7 +8,7 @@ object Table extends Ui.Table[Live.Account.Bot]:
 
   new Column[T.Parameter]("Param", 50) {
     value_:*(_.parameter_*)
-    format_:(_.toBrief)
+    format_:(_.tagBrief)
     contextMenu_:((e, c) => c.row_?.forval(m => {
       class Menu(name: String, f: T.Setting => Unit) extends Fx.Menu(name) { T.Setting.~.foreach(s => items += Fx.Menu.Item(s.ordinal +- s, ae => f(s))) }
       e.actions

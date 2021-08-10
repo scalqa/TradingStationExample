@@ -8,10 +8,10 @@ class Stats extends Ui.Module.Detail[Ticker]:
     close.text = t.close.toString
     high.text = t.high.toString
     low.text = t.low.toString
-    volume.text = t.volume.toBrief
+    volume.text = t.volume.tagBrief
     average.text = {
       val v = t.averageDay
-      Percent(t.volume.real * t.close.real, v.real).toInt.toString + "% / " + v.toBrief
+      Percent(t.volume.real * t.close.real, v.real).toInt.toString + "% / " + v.tagBrief
     }
   })
 
