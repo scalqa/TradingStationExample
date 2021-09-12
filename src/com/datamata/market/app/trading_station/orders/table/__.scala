@@ -16,7 +16,7 @@ class Table extends Ui.Table[Row] with _1_Account with _2_Type with _3_Clear wit
     updateTrigger_:(_.order.status_*)
   }
 
-  abstract class TheColumn[CV](label_ :String, width_ : Int, showBackground: Order => Boolean = \/)(using o: Opt[Ordering[CV]], i: Given.VoidDef[CV]) extends Column[CV](label_, width_)(using o)(using i):
+  abstract class TheColumn[CV](label_ :String, width_ : Int, showBackground: Order => Boolean = \/)(using o: Opt[Ordering[CV]], i: Any.Def.Void[CV]) extends Column[CV](label_, width_)(using o)(using i):
     sortable  = false
     alignment = CENTER
     style_:?(_.view_?.map(o => if (o.status.notClosed && showBackground(o)) o.background else ("-fx-background-color: rgb(192, 192, 192)": Fx.Style)))

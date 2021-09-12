@@ -14,7 +14,7 @@ object Messages extends Ui.Module.Listing[Message] with Message.Service:
   protected object Table extends Ui.Table[Message]:
     new Column[String]("Message", 400, _.text) {
       format_:(s => s.replaceAll("\n", " "))
-      style_:?(c => c.row_?.map(_.typ).collect{
+      style_:?(c => c.row_?.map(_.typ).map_?{
         case Message.Type.Error   => "red";
         case Message.Type.Warning => "blue"
         case Message.Type.Doc    => if (c.row.time.age < 30.Seconds) "white" else "grey"

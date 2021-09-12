@@ -51,10 +51,10 @@ private class TailViewList[A](protected val real: Idx.O[A], pos: Int) extends Id
   val start = Pro.M(pos)
   def apply(i: Int) = real(i + start())
   def size = real.size - start()
-  def onChange[U](l: ><[Idx.O.Event[A]] => U): Event.Control = real.onChange(Event.Id.map1(l,list => l(list.~.map_?[Opt[Idx.O.Event[A]]]{
-    case v: Idx.Event.Remove[A] => if (v.range.start >= start()) v else { start() -= 1; \/ }
-    case v: Idx.Event.Add[A]    => Idx.Event.Add(v.range.start - start(), v.items)
-    case v: Idx.Event.Update[A] => Idx.Event.Update.refresh(size - 1, v.items(0))
+  def onChange[U](l: ><[Idx.O.Event[A]] => U): Event.Control = real.onChange(Event.Id.map1(l,list => l(list.~.map_?{
+    case v: Idx.Event.Remove[A] => (if (v.range.start >= start()) v:Idx.Event[A] else { start() -= 1; \/ })
+    case v: Idx.Event.Add[A]    => Idx.Event.Add(v.range.start - start(), v.items) :Idx.Event[A]
+    case v: Idx.Event.Update[A] => Idx.Event.Update.refresh(size - 1, v.items(0))  :Idx.Event[A]
     case v                      => \/
   }.><)))
 
