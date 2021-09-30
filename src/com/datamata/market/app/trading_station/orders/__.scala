@@ -33,6 +33,6 @@ object Orders extends Ui.Module.Listing[Row]:
 
     def reload: Unit = control().^.?
        .fornil{Table.items.clear}
-       .forval(r => Table.items.replaceAll((~~[Quote.Type](BID, LAST, ASK).map(new Row(r, _)) ++ r.position.localOrders.~.map(new Row(r, _))).sort))
+       .forval(r => Table.items.replaceWith((~~[Quote.Type](BID, LAST, ASK).map(new Row(r, _)) ++ r.position.localOrders.~.map(new Row(r, _))).sort))
   }
 

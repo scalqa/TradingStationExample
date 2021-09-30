@@ -12,7 +12,7 @@ object MenuList:
 
       onMouseClicked(_ => selection.at_?(0).forval(onSelect))
 
-      def reload(f: String) = FxList.items.replaceAll(vList.~.take(_.toString.startsWith(f)))
+      def reload(f: String) = FxList.items.replaceWith(vList.~.take(_.toString.startsWith(f)))
     }
 
     items.add(new Fx.Menu.Item.Custom(new Fx.Pane.Split(VERTICAL) {

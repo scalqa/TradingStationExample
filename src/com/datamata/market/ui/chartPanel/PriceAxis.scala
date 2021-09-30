@@ -1,6 +1,6 @@
 package com.datamata; package market; package ui; package chartPanel; import language.implicitConversions
 
-class PriceAxis extends Fx.Chart.Axis.X.Numbers[Price]("Price", ReversibleFunction(_.real, Price(_))):
+class PriceAxis extends Fx.Chart.Axis.X.Numbers[Price]("Price", TwoWayFunction(_.real, Price(_))):
 
   //    tickUnit = 1800000;
   minorTickCount = 30;

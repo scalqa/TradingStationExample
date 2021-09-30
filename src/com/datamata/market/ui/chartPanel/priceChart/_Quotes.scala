@@ -11,7 +11,7 @@ transparent trait _Quotes:
       i = l
       items = if (!show_*()) \/ else Idx.O.wrap(l).statefulMap_^(q => new Item(q.created.genTime, q.price) {
         override lazy  val node : Fx.Shape.Path = Fx.Shape.Path().^(_.stroke = Fx.Color.LightBlue)
-        layoutJob = () => node.elements.replaceAll(items.~.zipIndex.map((i,it) => (if (i == 0) Fx.Shape.Path.MoveTo(it.xPos, it.yPos) else Fx.Shape.Path.LineTo(it.xPos, it.yPos)) :Fx.Shape.Path.Element))
+        layoutJob = () => node.elements.replaceWith(items.~.zipIndex.map((i,it) => (if (i == 0) Fx.Shape.Path.MoveTo(it.xPos, it.yPos) else Fx.Shape.Path.LineTo(it.xPos, it.yPos)) :Fx.Shape.Path.Element))
       })
 
   object AskQuotes  extends Quotes

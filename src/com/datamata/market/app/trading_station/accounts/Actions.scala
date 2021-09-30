@@ -25,7 +25,7 @@ object Actions:
         menu("Potential", {
           val l = Positions.~.take(_.accountRow == row).map_?(_.position.^.?.map(_.symbol)).><
           a.Tape.Tickers.~.map(_.symbol).take(_ == null).print
-          a.Tape.Tickers.~.map(_.symbol).sort.dropAll(l)
+          a.Tape.Tickers.~.map(_.symbol).sort.dropValues(l)
         }),
         Fx.Action("Clear all Non Active Orders ", () => cancel(!_.status.isActive)),
         Fx.Action("Cancel all Buys ", () => cancel(o => o.status.isSubmitted && o.qnty.isLong)),

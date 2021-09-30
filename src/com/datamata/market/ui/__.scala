@@ -3,7 +3,7 @@ package com.datamata; package market; import language.implicitConversions
 import ui.context.*
 
 object Ui:
-  val ConfigPath_?   : Opt[J.Path] = \/ //access.Setup.DMDataPath + "UILayout"
+  val ConfigPath_?   : Opt[J.Path] = \/
   def datamataCssUrl : J.Url       = J.Url(this.getClass, "Datamata.css")
 
   export Fx.Paint.Color.Named.*

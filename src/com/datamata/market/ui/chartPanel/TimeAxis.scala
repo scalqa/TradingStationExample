@@ -8,7 +8,7 @@ class TimeAxis private (val timeline_* :TimeAxis.TimelineProperty) extends Fx.Ch
 
 object TimeAxis:
 
-  class TimelineProperty(tl: Time.Line) extends Pro.M.X.Basic[Time.Line](tl) with ReversibleFunction[Gen.Time, Double]:
+  class TimelineProperty(tl: Time.Line) extends Pro.M.X.Basic[Time.Line](tl) with TwoWayFunction[Gen.Time, Double]:
 
     def apply(t: Gen.Time): Double = tl.millisTotal(t.mktTime).toDouble
 
