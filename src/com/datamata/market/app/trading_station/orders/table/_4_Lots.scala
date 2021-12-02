@@ -6,26 +6,26 @@ transparent trait _4_Lots:
   new TheColumn[Qnty]("Lots", 45, o => true) {
     LotConfig(this)
 
-    valueView_:*(_.remaining_*)
+    useValueFromViewPro(_.remainingPro)
 
-    edit_:(
-      new TextField(_.toLong_??.map_??{
+    useEditor(
+      new TextField(_.toLongResult.mapResult{
         case v if v <  0 => "Must be positive".Problem
         case v if v == 0 => "Cannot be zero".Problem
-        case v           => v.Qnty.??
+        case v           => Result(v.Qnty)
       }),
       (e, q) => e.order.qnty = q * 100 * (e.order.qnty.isShort ? -1 or 1),
-      _.order_?.take(_.status.notClosed)
+      _.orderOpt.take(_.status.notClosed)
     )
 
-    contextMenu_:((e, c) => c.view_?.take(_.status.notClosed).forval(o => {
-      (-10 <> 10).~.map(o.lots.abs + _).take(_ > 0).foreach(l => e.actions += Fx.Action(l.format("#.#"), () => o.lots = l.sided(o.qnty.side)))
+    useContextMenu((e, c) => c.viewOpt.take(_.status.notClosed).forval(o => {
+      (-10 <> 10).stream.map(o.lots.abs + _).take(_ > 0).foreach(l => e.actions += Fx.Action(l.format("#.#"), () => o.lots = l.sided(o.qnty.side)))
     }))
 
     styleClass = "dflt"
 
-    new AskCell(_.Ask.qnty_*, LotConfig)
-    new TrdCell(_.price_*,    PriceConfig){ format_:(_.^.?.map(Ui.Context.MathFormat.apply(_))) }
-    new BidCell(_.Bid.qnty_*, LotConfig)
+    new AskCell(_.Ask.qntyPro, LotConfig)
+    new TrdCell(_.pricePro,    PriceConfig){ useFormat(_.??.map(Ui.Context.MathFormat.apply(_))) }
+    new BidCell(_.Bid.qntyPro, LotConfig)
   }
 

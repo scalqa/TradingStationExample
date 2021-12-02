@@ -8,29 +8,29 @@ transparent trait _tradingColumns:
       label = "Lots";
       prefWidth = 28;
       styleClass = MktLotsClass;
-      format_:(_.remaining.lots.abs.format("##.##"), _ => "")
+      useFormat(_.remaining.lots.abs.format("##.##"), _ => "")
     } else {
       label = if (side.isLong) "Buy" else "Sell"
       prefWidth = 42
       styleClass = MktPriceClass
-      format_:(_.price.abs.format("##.00#"), _ => "")
+      useFormat(_.price.abs.format("##.00#"), _ => "")
     }
-    valueView_:*(v => v.localOrders.current_?*(side).map_^(_ or \/))
-    style_:?(c => c.value_?.take(_.status.isPending).map(_ => "-fx-border-color: blue; -fx-border-width: 1px":Fx.Style)
-      or_? c.row.position.localOrders.side(side).~.map(_.changed).max_?.map(_.age.secondsTotal).take(_ < (isPrice ? 60 or 10)).map(_ => "-fx-border-color: white; -fx-border-width: 1px":Fx.Style))
+    useValueFromViewPro(v => v.localOrders.currentOptPro(side).mapView(_ or VOID))
+    useStyleOpt(c => c.valueOpt.take(_.status.isPending).map(_ => "-fx-border-color: blue; -fx-border-width: 1px":Fx.Style)
+      orOpt c.row.position.localOrders.side(side).stream.map(_.changed).maxOpt.map(_.age.secondsTotal).take(_ < (isPrice ? 60 or 10)).map(_ => "-fx-border-color: white; -fx-border-width: 1px":Fx.Style))
     refreshEvery(1.Second)
   }
   new OrderColumn(BUY, false)
   new OrderColumn(BUY, true)
   new BidLotsColumn
   new BidPriceColumn {
-    updateTrigger_:(_.position.localOrders.currentBid_?*, _.position.localOrders.currentAsk_?*)
-    style_:?(_.row_?.map(_.position).drop(_.Bid.price.isVoid).map_?(p => p.orders.~.take(_.isCoveredBy(p.ticker.Bid.price)).sortBy(_.price).reverse.read_?.map(_.background)))
+    refreshOn(_.position.localOrders.currentBidOptPro, _.position.localOrders.currentAskOptPro)
+    useStyleOpt(_.rowOpt.map(_.position).drop(_.Bid.price.isVoid).mapOpt(p => p.orders.stream.take(_.isCoveredBy(p.ticker.Bid.price)).sortBy(_.price).reverse.readOpt.map(_.background)))
   }
   new SpreadPercentColumn
   new AskPriceColumn {
-    updateTrigger_:(_.position.localOrders.currentBid_?*, _.position.localOrders.currentAsk_?*)
-    style_:?(_.row_?.map(_.position).drop(_.Ask.price.isVoid).map_?(p => p.orders.~.take(_.isCoveredBy(p.ticker.Ask.price)).sortBy(_.price).read_?.map(_.background)))
+    refreshOn(_.position.localOrders.currentBidOptPro, _.position.localOrders.currentAskOptPro)
+    useStyleOpt(_.rowOpt.map(_.position).drop(_.Ask.price.isVoid).mapOpt(p => p.orders.stream.take(_.isCoveredBy(p.ticker.Ask.price)).sortBy(_.price).readOpt.map(_.background)))
   }
   new AskLotsColumn
   new OrderColumn(SELL, true)
@@ -39,9 +39,9 @@ transparent trait _tradingColumns:
   new PriceChangeColumn
   new Column[Time] {
     TimeConfig(this)
-    valueView_:*(_.created_*)
-    label = \/
+    useValueFromViewPro(_.createdPro)
+    label = VOID
     sortable = false
-    graphic = Fx.Label().^(l => Fx.Thread.scheduleEvery(1.Second, l.text = DayTime.current.roundTo(1.Second)(using DOWN).tag))
+    graphic = Fx.Label().self(l => Fx.Thread.scheduleEvery(1.Second, l.text = DayTime.current.roundTo(1.Second)(using DOWN).tag))
   }
 

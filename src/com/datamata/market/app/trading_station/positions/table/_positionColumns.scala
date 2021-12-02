@@ -3,11 +3,11 @@ package com.datamata.market; package app.trading_station; package positions; pac
 transparent trait _positionColumns:
   self: Table =>
 
-  new Column[String]("#", 5) { styleClass = AccountIdClass; value_:?(_.accountRow.id_?)  }
-  new SymbolColumn           { format_:(s => s.ticker + (s.market.country.isCanada ? " *" or "")) }
-  new Column[Price]          { valueView_:*(_.price_*); PriceConfig(this) }
-  new Column[Qnty]           { valueView_:*(_.qnty_*); QntyConfig(this) }
-  new Column[Number]("A")    { valueView_:*(_.amount_*.map_^(_.index)); IndexConfig(this) }
-  new Column[Amount]         { label = "PPL"; valueView_:*(_.paperPl_*); PlConfig(this) }
-  new Column[Amount]         { label = "BPL"; valueView_:*(_.bookedPl_*); PlConfig(this) }
+  new Column[String]("#", 5) { styleClass = AccountIdClass; useValueOpt(_.accountRow.idOpt)  }
+  new SymbolColumn           { useFormat(s => s.ticker + (s.market.country.isCanada ? " *" or "")) }
+  new Column[Price]          { useValueFromViewPro(_.pricePro); PriceConfig(this) }
+  new Column[Qnty]           { useValueFromViewPro(_.qntyPro); QntyConfig(this) }
+  new Column[Number]("A")    { useValueFromViewPro(_.amountPro.mapView(_.index)); IndexConfig(this) }
+  new Column[Amount]         { label = "PPL"; useValueFromViewPro(_.paperPlPro); PlConfig(this) }
+  new Column[Amount]         { label = "BPL"; useValueFromViewPro(_.bookedPlPro); PlConfig(this) }
 

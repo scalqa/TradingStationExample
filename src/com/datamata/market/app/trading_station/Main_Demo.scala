@@ -7,9 +7,9 @@ object MainDemo extends Ui.Application(1500, 700, "Trading Station With Simulate
 
     /* persistSizeAndLocation */   // Do not want to write to disk for the demo
 
-    Accounts.add("", Tape.Sim.^(_.connection.connect).^(_.generate(12)))
+    Accounts.add("", Tape.Sim.self(_.connection.connect).self(_.generate(12)))
 
-    Accounts.add("1", Account.Sim("Sim Account 1".AccountId, Tape.Sim).^(a => {
+    Accounts.add("1", Account.Sim("Sim Account 1".AccountId, Tape.Sim).self(a => {
       a.connection.connect
 
       J.scheduleIn(1.Second, {
@@ -18,10 +18,10 @@ object MainDemo extends Ui.Application(1500, 700, "Trading Station With Simulate
         a.Positions.get(Symbol.SPY).order(300.Qnty, 22.Price)
       })
     }))
-    Accounts.last.^(a => J.scheduleIn(3.Seconds, Tape.Sim.Tickers.~.map(_.symbol).sort.foreach(Positions.add(a,_))))
+    Accounts.last.self(a => J.scheduleIn(3.Seconds, Tape.Sim.Tickers.stream.map(_.symbol).sort.foreach(Positions.add(a,_))))
 
-    Accounts.add("2", Account.Sim("Sim Account 2".AccountId, Tape.Sim).^(_.connection.connect))
-    Accounts.add("3", Account.Sim("Sim Account 3".AccountId, Tape.Sim).^(_.connection.connect))
+    Accounts.add("2", Account.Sim("Sim Account 2".AccountId, Tape.Sim).self(_.connection.connect))
+    Accounts.add("3", Account.Sim("Sim Account 3".AccountId, Tape.Sim).self(_.connection.connect))
 
     scene.window.onHidden(() => J.Vm.exit)
   }

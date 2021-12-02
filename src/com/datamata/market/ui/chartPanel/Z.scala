@@ -8,8 +8,8 @@ object Z:
     autoSizeChildren = false
     private val OpenClose = Style.PseudoGroup("close-above-open", "open-above-close")
     private val mainIdx = new Idx(true)
-    private val openIdx = new Idx(false).^(_.startX = -3)
-    private val closeIdx = new Idx(false).^(_.startX = 3)
+    private val openIdx = new Idx(false).self(_.startX = -3)
+    private val closeIdx = new Idx(false).self(_.startX = 3)
 
     object tooltip extends Fx.Tooltip:
       val time, duration, open, close, high, low, volume =  Label()

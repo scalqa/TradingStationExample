@@ -3,7 +3,7 @@ package com.datamata; package market; package ui; package chartPanel; import lan
 transparent trait _properties:
   self: ChartPanel =>
 
-  lazy  val showVolume_* = Boolean.Pro.OM (false).^(p => {
+  lazy  val showVolumePro = Boolean.Pro.OM (false).self(p => {
     p.onValueChange(b => {
       if (b) {
         center = splitPane
@@ -17,6 +17,6 @@ transparent trait _properties:
     p() = true
   })
 
-  /**/  def showVolume     = showVolume_*();  def showVolume_=(v: Boolean) = showVolume_*() = v
-  lazy  val showTrades_*   = Boolean.Pro.OM (false).^(_.onValueChange(priceChart.LastQuotes.show_*()= _))
-  lazy  val showBidsAsks_* = Boolean.Pro.OM (false).^(_.onValueChange(v => { priceChart.BidQuotes.show_*() = v; priceChart.AskQuotes.show_*() = v }))
+  /**/  def showVolume     = showVolumePro();  def showVolume_=(v: Boolean) = showVolumePro() = v
+  lazy  val showTradesPro   = Boolean.Pro.OM (false).self(_.onValueChange(priceChart.LastQuotes.showPro()= _))
+  lazy  val showBidsAsksPro = Boolean.Pro.OM (false).self(_.onValueChange(v => { priceChart.BidQuotes.showPro() = v; priceChart.AskQuotes.showPro() = v }))

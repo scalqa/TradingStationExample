@@ -4,12 +4,12 @@ transparent trait _2_Type:
   self: Table =>
 
   new TheColumn[Order.Type]("Type", 60, _.status.isSubmitted) {
-    valueView_:(_.orderType);
-    updateTrigger_:(_.order.status_*)
+    useValueFromView(_.orderType);
+    refreshOn(_.order.statusPro)
     styleClass = "dflt"
     // onEdit(row = row.isDataRow() && row().status().isNew(), () = new ComboBoxEditor() {items().addAll(J.Order.Type.V.LIMIT.all());    onCommit((o, v, ov) = o.type().set(v)) });
-    new AskCell[Amount](_.paperPl_*, PlConfig)
-    new TrdCell[Symbol](_.symbol_*, SymbolConfig) // { alignment = CENTER }
-    new BidCell[Amount](_.bookedPl_*, PlConfig)
+    new AskCell[Amount](_.paperPlPro, PlConfig)
+    new TrdCell[Symbol](_.symbolPro, SymbolConfig) // { alignment = CENTER }
+    new BidCell[Amount](_.bookedPlPro, PlConfig)
   }
 

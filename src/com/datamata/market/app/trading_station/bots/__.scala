@@ -2,4 +2,4 @@ package com.datamata.market; package app.trading_station; import Live.*; import 
 
 object Bots extends Ui.Module.Listing.Default(bots.Table):
 
-  Accounts.selection.onChange(s => Table.rows.replaceWith(s.value_?.map_?(_.account_?).map(_.bots.~) or \/))
+  Accounts.selection.onChange(s => Table.rows.replaceWith(s.valueOpt.mapOpt(_.accountOpt).map(_.bots.stream) or VOID))

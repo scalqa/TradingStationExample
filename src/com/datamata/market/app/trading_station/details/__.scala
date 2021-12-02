@@ -6,10 +6,10 @@ class Details extends Ui.Module.Detail[Position]:
   self =>
 
   protected object View extends Fx.Pane.Tab:
-    add("",       new ui.base.ticker.detail.Stats().^(_.bindTo(self)))
+    add("",       new ui.base.ticker.detail.Stats().self(_.bindTo(self)))
     add(ExecutionsTab(self))
-    add("Quotes", new ui.base.ticker.detail.Quotes().^(_.bindTo(self)))
-    add("Data",   new ui.base.ticker.detail.Data(true).^(_.bindTo(self)).^(_.View.selection.selectAt(1)))
+    add("Quotes", new ui.base.ticker.detail.Quotes().self(_.bindTo(self)))
+    add("Data",   new ui.base.ticker.detail.Data(true).self(_.bindTo(self)).self(_.View.selection.selectAt(1)))
     add(ChartTab(self));
     selection.selectAt(2)
 
@@ -18,5 +18,5 @@ class Details extends Ui.Module.Detail[Position]:
 object Details extends Details:
 
   Positions.selection.onChange(s =>
-    Fx.Thread.scheduleIn(1.Millis, Details() = s.value_?.map(_.position) or \/)
+    Fx.Thread.scheduleIn(1.Millis, Details() = s.valueOpt.map(_.position) or VOID)
   )

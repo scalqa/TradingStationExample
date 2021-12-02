@@ -1,24 +1,24 @@
 package com.datamata; package market; package ui; import chartPanel.*; import language.implicitConversions
 
-class ChartPanel(val timeIdx: Time.Line = \/) extends Fx.Pane.Border with _properties:
+class ChartPanel(val timeIdx: Time.Line = VOID) extends Fx.Pane.Border with _properties:
 
   val splitPane = Fx.Pane.Split(VERTICAL)
 
-  val priceChart = new Ui.ChartPanel.PriceChart(timeIdx).^(cs => {
+  val priceChart = new Ui.ChartPanel.PriceChart(timeIdx).self(cs => {
     cs.axisX.ticksVisible = false
-    cs.axisX.label = \/
-    cs.axisY.label = \/
+    cs.axisX.label = VOID
+    cs.axisY.label = VOID
     padding = padding.newBottom(0)
   })
 
-  val volumeChart = new VolumeChart(timeIdx).^(v => {
+  val volumeChart = new VolumeChart(timeIdx).self(v => {
     prefHeight = 50
     padding = padding.newTop(0)
-    v.axisX.label = \/
-    v.axisY.label = \/
+    v.axisX.label = VOID
+    v.axisY.label = VOID
   })
 
-  def apply(spreads: Idx.O[Quote.Bar], quotes: Idx.O[Quote] = \/, trades: Idx.O[Trade.Fill] = \/): Unit =
+  def apply(spreads: Idx.O[Quote.Bar], quotes: Idx.O[Quote] = VOID, trades: Idx.O[Trade.Fill] = VOID): Unit =
     priceChart.Candles(spreads)
     priceChart.LastQuotes(quotes)
     priceChart.TradeFills(trades)

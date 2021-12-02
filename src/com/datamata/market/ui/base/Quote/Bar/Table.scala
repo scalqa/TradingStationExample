@@ -5,14 +5,14 @@ trait Table[RAW] extends Ui.Table[RAW]:
 
   protected def setupDefaultColumns: Unit = { TimeColumn();  DurationColumn(); VolumeColumn(); OHLCColumn() }
 
-  class VolumeColumn   extends Column[Qnty] { Ui.VolumeConfig(this); valueView_:(_.volume) }
-  class TimeColumn     extends Column[Time] { Ui.TimeConfig(this); valueView_:(_.start) }
-  class DurationColumn extends Column[Duration]("Dur", 35) { valueView_:(_.duration) }
+  class VolumeColumn   extends Column[Qnty] { Ui.VolumeConfig(this);  useValueFromView(_.volume) }
+  class TimeColumn     extends Column[Time] { Ui.TimeConfig(this);  useValueFromView(_.start) }
+  class DurationColumn extends Column[Duration]("Dur", 35) {  useValueFromView(_.duration) }
 
   class OHLCColumn extends Column[String]("O-H-L-C", 125):
     styleClass = Ui.MktPriceClass
     //alignment = Fx.LEFT
-    valueView_:(b => {
+    useValueFromView(b => {
       val f = Math.Format("###.00#")
       if (b.isFlat) f(b.close)
       else f(b.open) + "  " + f(b.high) + "  " + f(b.low) + "  " + f(b.close)

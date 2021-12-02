@@ -8,10 +8,10 @@ object Table extends Ui.Table[Able.Name & Pro.O[Any]]:
   }
 
   new Column[Any]("Value", 75)(using Ordering.anyAsString) {
-    value_:*(v => v)
-    format_:(a => a.?.takeType[Amount].map(_.format("#,##0")) or a.tag)
+    useValuePro(v => v)
+    useFormat(a => a.?.takeType[Amount].map(_.format("#,##0")) or a.tag)
     alignment = RIGHT
-    styleClass_:?(_.row_?.map(_()).takeType[Amount].map(_ => MktAmountClass))
+    useStyleClassOpt(_.rowOpt.map(_()).takeType[Amount].map(_ => MktAmountClass))
     style = "-fx-font-size:11"
   }
 

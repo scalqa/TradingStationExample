@@ -1,9 +1,9 @@
 package com.datamata; package market; package ui; package chartPanel; package test; import language.implicitConversions
 
 object SampleQuoteData extends Quote.Range.X.BarBase {
-  private val data = scala.Array.ofDim[Double](31, 6).^(a => {
+  private val data = scala.Array.ofDim[Double](31, 6).self(a => {
     var cnt = 0;
-    def add(v: Double*): Unit = { v.~.foreachIndexed((i, d) => { a(cnt)(i) = d }); cnt += 1 }
+    def add(v: Double*): Unit = { v.stream.foreachIndexed((i, d) => { a(cnt)(i) = d }); cnt += 1 }
     add(1, 25, 20, 32, 16, 20)
     add(2, 26, 30, 33, 22, 25.0)
     add(3, 30, 38, 40, 20, 32.0)

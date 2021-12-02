@@ -10,5 +10,5 @@ trait Table[ROW] extends quote.Table[ROW]:
   class FeeColumn extends Column[Amount]:
     label = "Fee"
     Ui.AmountConfig(this);
-    valueView_:(_.fee)
+    useValueFromView(_.fee)
 

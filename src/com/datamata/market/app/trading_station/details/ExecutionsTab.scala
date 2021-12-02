@@ -9,35 +9,35 @@ class ExecutionsTab(pro: Pro.O[Position]) extends Fx.Pane.Tab.Panel("Executions"
   })
 
   class Row(val real: Execution):
-    val totalQnty_* = Pro.OM[Qnty](\/)
+    val totalQntyPro = Pro.OM[Qnty](VOID)
 
   // *************************************************************************
   object Executions extends Ui.Module.Listing[Row]:
     pro.onValueChange(p => {
-      Table.items = p.fills.reversed_^.statefulMap_^(new Row(_)).^(_.onAdd(_ => recalculate))
+      Table.items = p.fills.reversedView.statefulMapView(new Row(_)).self(_.onAdd(_ => recalculate))
       recalculate
     })
 
     object Table extends ui.base.trade.Fill.Table[Row]:
       type VIEW = Execution
-      view_:(_.real)
+      useView(_.real)
       setupDefaultColumns
-      new Column[Number]  ("A")         { valueView_:(_.amount.index); IndexConfig(this) }.reposition(2)
-      new Column[Qnty]    ("Total", 33) { value_:*(_.totalQnty_*); LotConfig(this) }
-      new Column[Order.Id]("Order", 55) { valueView_:(_.orderId) }
+      new Column[Number]  ("A")         {  useValueFromView(_.amount.index); IndexConfig(this) }.reposition(2)
+      new Column[Qnty]    ("Total", 33) { useValuePro(_.totalQntyPro); LotConfig(this) }
+      new Column[Order.Id]("Order", 55) {  useValueFromView(_.orderId) }
       sortMode = Fx.Table.SortMode.ProxyWithUnsorted
 
     private def recalculate =
-      Table.items.~.reverse.zipFoldAs(\/ :Qnty, _ + _.real.qnty).foreach(t => t._1.totalQnty_*() = t._2)
-      Orders.Table.items = pro().fills.~.sortBy(_.orderId).reverse.groupWith(_.orderId).map(t => {
+      Table.items.stream.reverse.zipFoldAs(VOID :Qnty, _ + _.real.qnty).foreach(t => t._1.totalQntyPro() = t._2)
+      Orders.Table.items = pro().fills.stream.sortBy(_.orderId).reverse.groupWith(_.orderId).map(t => {
         val (q, a, f) = t._2.sumFew(_.qnty, _.amount, _.fee)
         (t._1, q.toLong.Qnty, a, f)
-      }).><
+      }).pack
 
   // *************************************************************************
   object Orders extends Ui.Module.Listing[(Order.Id, Qnty, Amount, Amount)]:
     object Table extends Ui.Table[(Order.Id, Qnty, Amount, Amount)]:
-      new Column[Order.Id]("Order", 55) { value_:(_._1) }
-      new Column[Qnty]    ("Lots")      { value_:(_._2); QntyConfig(this) }
-      new Column[Number]  ("A")         { value_:(_._3.index); IndexConfig(this) }
-      new Column[Amount]  ("Fee")       { value_:(_._4); AmountConfig(this) }
+      new Column[Order.Id]("Order", 55) { useValue(_._1) }
+      new Column[Qnty]    ("Lots")      { useValue(_._2); QntyConfig(this) }
+      new Column[Number]  ("A")         { useValue(_._3.index); IndexConfig(this) }
+      new Column[Amount]  ("Fee")       { useValue(_._4); AmountConfig(this) }

@@ -2,10 +2,10 @@ package com.datamata.market; package app.trading_station; package positions; imp
 
 class Row(val accountRow: Accounts.Row, val position: Live.Position) extends Able.Doc {
 
-  def curOdr_?(s: Side): Opt[Order] = position.^.?.map_?(_.localOrders.current_?*(s)().asInstanceOf[Opt[Order]])
+  def curOdrOpt(s: Side): Opt[Order] = position.??.mapOpt(_.localOrders.currentOptPro(s)().asInstanceOf[Opt[Order]])
 
-  def doc = Doc(this) += ("account", accountRow.id_?) += ("symbol", position.symbol)
+  def doc = Doc(this) += ("account", accountRow.idOpt) += ("symbol", position.symbol)
 
 }
 
-object Row extends Gen.Void.Setup[Row](new Row(null, \/) with Gen.Void)
+object Row extends Gen.Void.Setup[Row](new Row(null, VOID) with Gen.Void)

@@ -11,24 +11,24 @@ trait Table[RAW] extends Ui.Table[RAW]:
     SymbolColumn(); OpenColumn(); HighColumn(); LowColumn(); VolumeColumn(); BidLotsColumn(); BidPriceColumn();
     SpreadPercentColumn(); AskPriceColumn(); AskLotsColumn(); LastPriceColumn(); PriceChangeColumn()
 
-  class SymbolColumn      extends Column[Symbol] {       Ui.SymbolConfig(this); valueView_:(_.symbol) }
-  class OpenColumn        extends Column[Price]("Open") { Ui.PriceConfig(this); valueView_:*(_ match{ case v: LT => v.open_*;       case v => Pro.O.constant(v.open) })}
-  class HighColumn        extends Column[Price]("High") { Ui.PriceConfig(this); valueView_:*(_ match{ case v: LT => v.high_*;       case v => Pro.O.constant(v.high) })}
-  class LowColumn         extends Column[Price]("Low")  { Ui.PriceConfig(this); valueView_:*(_ match{ case v: LT => v.low_*;        case v => Pro.O.constant(v.low) })}
-  class CloseColumn       extends Column[Price]("Close") {Ui.PriceConfig(this); valueView_:*(_ match{ case v: LT => v.close_*;      case v => Pro.O.constant(v.close) })}
-  class VolumeColumn      extends Column[Qnty] {         Ui.VolumeConfig(this); valueView_:*(_ match{ case v: LT => v.volume_*;     case v => Pro.O.constant(v.volume) })}
-  class BidLotsColumn     extends Column[Qnty] {            Ui.LotConfig(this); valueView_:*(_ match{ case v: LT => v.Bid.qnty_*;   case v => Pro.O.constant(v.Bid.qnty) })}
-  class BidPriceColumn    extends Column[Price] {         Ui.PriceConfig(this); valueView_:*(_ match{ case v: LT => v.Bid.price_*;  case v => Pro.O.constant(v.Bid.price) })}
-  class AskLotsColumn     extends Column[Qnty] {            Ui.LotConfig(this); valueView_:*(_ match{ case v: LT => v.Ask.qnty_*;   case v => Pro.O.constant(v.Ask.qnty) })}
-  class AskPriceColumn    extends Column[Price] {         Ui.PriceConfig(this); valueView_:*(_ match{ case v: LT => v.Ask.price_*;  case v => Pro.O.constant(v.Ask.price) })}
-  class LastPriceColumn   extends Column[Price]("Last"){  Ui.PriceConfig(this); valueView_:*(_ match{ case v: LT => v.Last.price_*; case v => Pro.O.constant(v.Last.price) })}
-  class PriceChangeColumn extends Column[Percent] { Ui.PriceChangeConfig(this); valueView_:*(_ match{ case v: LT => v.change_*;     case v => Pro.O.constant(v.change) })}
+  class SymbolColumn      extends Column[Symbol] {       Ui.SymbolConfig(this);  useValueFromView(_.symbol) }
+  class OpenColumn        extends Column[Price]("Open") { Ui.PriceConfig(this); useValueFromViewPro(_ match{ case v: LT => v.openPro;       case v => Pro.O.constant(v.open) })}
+  class HighColumn        extends Column[Price]("High") { Ui.PriceConfig(this); useValueFromViewPro(_ match{ case v: LT => v.highPro;       case v => Pro.O.constant(v.high) })}
+  class LowColumn         extends Column[Price]("Low")  { Ui.PriceConfig(this); useValueFromViewPro(_ match{ case v: LT => v.lowPro;        case v => Pro.O.constant(v.low) })}
+  class CloseColumn       extends Column[Price]("Close") {Ui.PriceConfig(this); useValueFromViewPro(_ match{ case v: LT => v.closePro;      case v => Pro.O.constant(v.close) })}
+  class VolumeColumn      extends Column[Qnty] {         Ui.VolumeConfig(this); useValueFromViewPro(_ match{ case v: LT => v.volumePro;     case v => Pro.O.constant(v.volume) })}
+  class BidLotsColumn     extends Column[Qnty] {            Ui.LotConfig(this); useValueFromViewPro(_ match{ case v: LT => v.Bid.qntyPro;   case v => Pro.O.constant(v.Bid.qnty) })}
+  class BidPriceColumn    extends Column[Price] {         Ui.PriceConfig(this); useValueFromViewPro(_ match{ case v: LT => v.Bid.pricePro;  case v => Pro.O.constant(v.Bid.price) })}
+  class AskLotsColumn     extends Column[Qnty] {            Ui.LotConfig(this); useValueFromViewPro(_ match{ case v: LT => v.Ask.qntyPro;   case v => Pro.O.constant(v.Ask.qnty) })}
+  class AskPriceColumn    extends Column[Price] {         Ui.PriceConfig(this); useValueFromViewPro(_ match{ case v: LT => v.Ask.pricePro;  case v => Pro.O.constant(v.Ask.price) })}
+  class LastPriceColumn   extends Column[Price]("Last"){  Ui.PriceConfig(this); useValueFromViewPro(_ match{ case v: LT => v.Last.pricePro; case v => Pro.O.constant(v.Last.price) })}
+  class PriceChangeColumn extends Column[Percent] { Ui.PriceChangeConfig(this); useValueFromViewPro(_ match{ case v: LT => v.changePro;     case v => Pro.O.constant(v.change) })}
 
   class SpreadPercentColumn extends Column[Number]("%", 25):
-    valueView_:*(_ match{ case v: LT => v.spread_*.map_^(_.toNumber); case v => Pro.O.constant(v.spread).map_^(_.toNumber) })
-    tooltip_:(v => "Bid/Ask Spread Percent")
+    useValueFromViewPro(_ match{ case v: LT => v.spreadPro.mapView(_.toNumber); case v => Pro.O.constant(v.spread).mapView(_.toNumber) })
+    useTooltip(v => "Bid/Ask Spread Percent")
     Ui.IndexConfig(this);
-    format_:(Table.Format(_))
+    useFormat(Table.Format(_))
 
 
 object Table:

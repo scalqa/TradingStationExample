@@ -19,25 +19,25 @@ class Data(val reversed: Boolean = false) extends Ui.Module.Detail[M.Ticker]:
     protected object Table extends quote.bar.Table[M.Quote.Bar] {
       setupDefaultColumns
 
-      val indexs = (0 <> 3).~.map(new Index(_)).><
+      val indexs = (0 <> 3).stream.map(new Index(_)).pack
 
       class Index(i: Int) extends Column[Double]("#", 60) {
-        value_:?(_.inds.at_?(i));
-        format_:(Format.apply(_), _ => "")
+        useValueOpt(_.inds.applyOpt(i));
+        useFormat(Format.apply(_), _ => "")
       }
     }
 
     Data.this.asInstanceOf[Pro.OM[M.Ticker]].onValueChange(t =>
-      t.^.?
+      t.??
       .map(_.quote(typ).range)
       .forval(r => {
-          Table.items = Idx.O.wrap(r).reversed_^
-          val l = r.index_~.map(_.name).><
-          Table.indexs.~.foreachIndexed((i, v) => v.label = l.at_?(i) or "#")
+          Table.items = Idx.O.wrap(r).reversedView
+          val l = r.indexStream.map(_.name).pack
+          Table.indexs.stream.foreachIndexed((i, v) => v.label = l.applyOpt(i) or "#")
         })
       .fornil {
-        Table.items = \/
-        Table.indexs.~.foreach(_.label = "#")
+        Table.items = VOID
+        Table.indexs.stream.foreach(_.label = "#")
       })
   }
 

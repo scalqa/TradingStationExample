@@ -1,10 +1,10 @@
 package com.datamata; package market; package ui; package chartPanel; import language.implicitConversions
 
-class TimeAxis private (val timeline_* :TimeAxis.TimelineProperty) extends Fx.Chart.Axis.X.Time("Time", timeline_*):
+class TimeAxis private (val timelinePro :TimeAxis.TimelineProperty) extends Fx.Chart.Axis.X.Time("Time", timelinePro):
   def this(tl: Time.Line = Time.Line.Void) = this(new TimeAxis.TimelineProperty(tl))
 
-  def timeline = timeline_*()
-  def timeline_=(tl: Time.Line) = timeline_*() = tl
+  def timeline = timelinePro()
+  def timeline_=(tl: Time.Line) = timelinePro() = tl
 
 object TimeAxis:
 

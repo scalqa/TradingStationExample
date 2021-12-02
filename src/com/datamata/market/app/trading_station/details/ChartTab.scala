@@ -4,17 +4,17 @@ class ChartTab(pro: Pro.O[Position]) extends Fx.Pane.Tab.Panel("Chart"):
 
   content = new Fx.Pane.Border {
     top = new Fx.Pane.Border {
-      left = Fx.Pane.HorizontalBox(LengthSelector.items.~.asInstanceOf[~[Fx.Node]])
+      left = Fx.Pane.HorizontalBox(LengthSelector.items.stream.asInstanceOf[~[Fx.Node]])
       right = Fx.Pane.HorizontalBox(
-        Fx.CheckBox("AskBid ", Chart.showBidsAsks_*),
-        Fx.CheckBox("Trades ", Chart.showTrades_*),
-        Fx.CheckBox("Volume ", Chart.showVolume_*))
+        Fx.CheckBox("AskBid ", Chart.showBidsAsksPro),
+        Fx.CheckBox("Trades ", Chart.showTradesPro),
+        Fx.CheckBox("Volume ", Chart.showVolumePro))
     }
     center = Chart
   }
 
   object LengthSelector extends Fx.Toggle.Group {
-    items.addAll(~~(6.Weeks, 1.Week, 1.Day, 4.Hours, 1.Hour, 15.Minutes, 5.Minutes, 1.Minute).map(d => new Button(d.tag, d)) +@ (0, new Button("All", \/)))
+    items.addAll(Stream(6.Weeks, 1.Week, 1.Day, 4.Hours, 1.Hour, 15.Minutes, 5.Minutes, 1.Minute).map(d => new Button(d.tag, d)) +@ (0, new Button("All", VOID)))
     select(items.head)
 
     def apply() = selected.asInstanceOf[Button].length
@@ -24,7 +24,7 @@ class ChartTab(pro: Pro.O[Position]) extends Fx.Pane.Tab.Panel("Chart"):
 
   object Chart extends Ui.ChartPanel() {
     pro.onValueChange(reset(_))
-    showVolume_*() = false
+    showVolumePro() = false
     def reset(p: Position): Unit = {
       val u: Time.Length = LengthSelector()
       val r = p.Last.range
@@ -51,10 +51,10 @@ private class TailViewList[A](protected val real: Idx.O[A], pos: Int) extends Id
   val start = Pro.M(pos)
   def apply(i: Int) = real(i + start())
   def size = real.size - start()
-  def onChange[U](l: ><[Idx.O.Event[A]] => U): Event.Control = real.onChange(Event.Id.map1(l,list => l(list.~.map_?{
-    case v: Idx.Event.Remove[A] => (if (v.range.start >= start()) v:Idx.Event[A] else { start() -= 1; \/ })
+  def onChange[U](l: Pack[Idx.O.Event[A]] => U): Event.Control = real.onChange(Event.Id.map1(l,list => l(list.stream.mapOpt{
+    case v: Idx.Event.Remove[A] => (if (v.range.start >= start()) v:Idx.Event[A] else { start() -= 1; VOID })
     case v: Idx.Event.Add[A]    => Idx.Event.Add(v.range.start - start(), v.items) :Idx.Event[A]
     case v: Idx.Event.Update[A] => Idx.Event.Update.refresh(size - 1, v.items(0))  :Idx.Event[A]
-    case v                      => \/
-  }.><)))
+    case v                      => VOID
+  }.pack)))
 

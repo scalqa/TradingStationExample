@@ -2,9 +2,9 @@ package com.datamata.market; package app.trading_station; package accounts; impo
 
 object Actions:
 
-  def ~(row: Row): ~[Fx.Action] = row.value_?.map {
+  def stream(row: Row): ~[Fx.Action] = row.valueOpt.map {
     case t: Tape =>
-      ~~(Fx.Action("Browser...", () => Fx.Stage("Tape Browser", 500, 300, new ui.base.tape.Detail(t)).^(_.scene.styleSheets += Ui.datamataCssUrl).show))
+      Stream(Fx.Action("Browser...", () => Fx.Stage("Tape Browser", 500, 300, new ui.base.tape.Detail(t)).self(_.scene.styleSheets += Ui.datamataCssUrl).show))
 
     case a: Account =>
 
@@ -13,22 +13,22 @@ object Actions:
         Ui.MenuList[Symbol](name, s.sort, add, _.foreach(add))
       }
 
-      def menuStatus(name: String, f: Position.Status => Boolean): Fx.Menu = menu(name, a.Positions.~.take(v => f(v.status)).map(_.symbol))
+      def menuStatus(name: String, f: Position.Status => Boolean): Fx.Menu = menu(name, a.Positions.stream.take(v => f(v.status)).map(_.symbol))
 
-      def cancel(f: Order => Boolean) = a.publishInfo(a.order_~.take(f).load.peek(_.cancel).count +- " orders processed.")
+      def cancel(f: Order => Boolean) = a.publishInfo(a.orderStream.take(f).load.peek(_.cancel).count +- " orders processed.")
 
-      ~~[Fx.Action](
+      Stream[Fx.Action](
         SEPARATOR,
         menuStatus("All Positions", _ => true),
         menuStatus("Active", _.isActive),
         menuStatus("Closed", _.isClosed),
         menu("Potential", {
-          val l = Positions.~.take(_.accountRow == row).map_?(_.position.^.?.map(_.symbol)).><
-          a.Tape.Tickers.~.map(_.symbol).take(_ == null).print
-          a.Tape.Tickers.~.map(_.symbol).sort.dropValues(l)
+          val l = Positions.stream.take(_.accountRow == row).mapOpt(_.position.??.map(_.symbol)).pack
+          a.Tape.Tickers.stream.map(_.symbol).take(_ == null).print
+          a.Tape.Tickers.stream.map(_.symbol).sort.dropValues(l)
         }),
         Fx.Action("Clear all Non Active Orders ", () => cancel(!_.status.isActive)),
         Fx.Action("Cancel all Buys ", () => cancel(o => o.status.isSubmitted && o.qnty.isLong)),
         Fx.Action("Cancel all Sells ", () => cancel(o => o.status.isSubmitted && o.qnty.isShort)))
-  } or \/
+  } or VOID
 

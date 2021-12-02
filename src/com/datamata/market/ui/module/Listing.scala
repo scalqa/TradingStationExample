@@ -2,8 +2,8 @@ package com.datamata; package market; package ui; package module; import languag
 
 abstract class Listing[A] protected extends Module with Idx[A]:
   protected lazy  val Table                              : Fx.Table[A]
-  protected lazy  val View                               : Fx.Abstract.Parent = new Fx.Pane.Border { center = Table; eventStore.removeProperty_?[Fx.Node.Like](Listing.StatusBar).forval(bottom = _)}
-  protected       def statusBar_:(sb: => Fx.Node.Like)   : Unit            = eventStore.setProperty_?(Listing.StatusBar, sb)
+  protected lazy  val View                               : Fx.Abstract.Parent = new Fx.Pane.Border { center = Table; eventStore.removePropertyOpt[Fx.Node.Like](Listing.StatusBar).forval(bottom = _)}
+  protected       def statusBarAs(sb: => Fx.Node.Like)   : Unit            = eventStore.setPropertyOpt(Listing.StatusBar, sb)
   protected       def rows                               : Idx.OM[A]       = Table.rows
 
   /**/            def items                              : Idx[A]          = Table.items

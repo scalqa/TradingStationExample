@@ -7,7 +7,7 @@ transparent trait _TradeFills:
     var cnt = 0
 
     def apply(l: Idx[Trade.Fill]): Unit =
-      items = Idx.O.wrap(l).statefulMap_^(f => new Item(f.created.genTime, f.price) {
+      items = Idx.O.wrap(l).statefulMapView(f => new Item(f.created.genTime, f.price) {
         val hash = { cnt += 1; cnt }
         override lazy  val node : Fx.Shape.Circle = new Fx.Shape.Circle(0) {
           new Fx.Tooltip {

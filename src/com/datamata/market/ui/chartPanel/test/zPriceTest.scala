@@ -9,4 +9,4 @@ object zPriceTest extends Fx.Application(900, 500, "CandleStick Test"):
     //    //qr = Quote.Range.A.Sample.Medium
     //    qr = Quote.Range.A.Sample.Large
     Candles(SampleQuoteData)
-    LastQuotes(SampleQuoteData.map_^(s => Quote(s.volume, s.close, s.start)))
+    LastQuotes(SampleQuoteData.mapView(s => Quote(s.volume, s.close, s.start)))

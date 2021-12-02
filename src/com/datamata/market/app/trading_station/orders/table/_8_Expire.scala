@@ -5,21 +5,21 @@ transparent trait _8_Expire:
 
   new TheColumn[Time]("Expire", 45, _.status.isActive) {
     TimeConfig(this)
-    value_:?*(_.order_?.take(_.status.notClosed).map(_.expire_*))
+    useValueOptPro(_.orderOpt.take(_.status.notClosed).map(_.expirePro))
 
     new BidCell() {
-      cell_:(PositiveNegativePseudoGroup(_, -1))
+      useCellSetup(PositiveNegativePseudoGroup(_, -1))
     }
-    new TrdCell(_.change_*, PriceChangeConfig)
+    new TrdCell(_.changePro, PriceChangeConfig)
     new AskCell() {
-      cell_:(PositiveNegativePseudoGroup(_, -1))
+      useCellSetup(PositiveNegativePseudoGroup(_, -1))
     }
 
-    contextMenu_:((e, c) => c.view_?.take(_.status.notClosed).forval(o => {
+    useContextMenu((e, c) => c.viewOpt.take(_.status.notClosed).forval(o => {
 
-      def tu = ~~.void[Time.Length] ++ ~~(1, 2, 5, 10, 15, 30).map(_.Minutes) ++ ~~(1, 2, 3).map(_.Hours)
+      def tu = Stream.void[Time.Length] ++ Stream(1, 2, 5, 10, 15, 30).map(_.Minutes) ++ Stream(1, 2, 3).map(_.Hours)
 
-      e.actions +=  Fx.Action("*", () => o.expire = \/)
+      e.actions +=  Fx.Action("*", () => o.expire = VOID)
       e.actions ++= tu.map(t => Fx.Action(t.tag, () => o.expire = o.position.Tape.time + t + 1.Second))
     }))
   }
