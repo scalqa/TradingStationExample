@@ -20,7 +20,7 @@ transparent trait _5_Price:
 
     useContextMenu((e, c) => c.viewOpt.take(_.status.notClosed).forval(o =>
       e.actions ++= {
-        (0.99 <> 1.01).streamStep(_ + 0.001).map(o.price * _).map(_.roundToDecimal(2)).take(_.toDouble >= 0.001).map(p => (p, Fx.Action(p.tag, () => o.price = p))) +
+        (0.99 <> 1.01).stepStream(_ + 0.001).map(o.price * _).map(_.roundToDecimal(2)).take(_.toDouble >= 0.001).map(p => (p, Fx.Action(p.tag, () => o.price = p))) +
           { val p = o.position.ticker.Ask.price; (p, Fx.Action("ask".label, () => o.price = p)) } +
           { val p = o.position.ticker.Bid.price; (p, Fx.Action("bid".label, () => o.price = p)) }
       }.sortBy(_._1).reverse.map(_._2)))
